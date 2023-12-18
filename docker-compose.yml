@@ -4,27 +4,24 @@ version: '3'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    container_name: bestApp
+    build: app
     ports:
       - "3000:3000"
     depends_on:
       - db
-    volumes:
-      - ./public:/app/public
 
   db:
+    container_name: bestDB
     image: mongo
     volumes:
-      - mongo-data:/data/db  # Named volume for MongoDB data persistence
+      - mongo-data:/data/db
     ports:
       - "27017:27017"
 
   nginx:
-    image: nginx:alpine
-    volumes:
-      - ./default.conf:/etc/nginx/conf.d/default.conf
+    container_name: bestNginx
+    build: nginx
     ports:
       - "80:80"
     depends_on:

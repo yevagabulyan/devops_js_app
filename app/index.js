@@ -7,7 +7,7 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
-mongoose.connect('mongodb://db:27017/dockerized-app', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://bestDb:27017/dockerized-app', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const TestSchema = new mongoose.Schema({
   name: String,
