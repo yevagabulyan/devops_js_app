@@ -15,7 +15,7 @@ services:
     container_name: bestDB
     image: mongo
     volumes:
-      - mongo-data:/data/db
+      - ${PWD}/mongo-data:/data/db
     ports:
       - "27017:27017"
 
