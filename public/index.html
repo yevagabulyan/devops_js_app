@@ -1,0 +1,72 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dockerized App</title>
+</head>
+<body>
+  <h1>Hello from Dockerized App!</h1>
+  <p>This is a simple UI for the Node.js application.</p>
+
+  <form id="data-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="surname">Surname:</label>
+    <input type="text" id="surname" name="surname" required>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" required>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="mongodb-data">
+    <h2>MongoDB Data:</h2>
+    <ul id="data-list"></ul>
+  </div>
+
+  <script>
+    async function fetchData() {
+      const response = await fetch('/data');
+      const data = await response.json();
+
+      const dataList = document.getElementById('data-list');
+      dataList.innerHTML = '';
+
+      data.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${item.name} ${item.surname}, Age: ${item.age}`;
+        dataList.appendChild(listItem);
+      });
+    }
+
+    async function submitForm(event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form);
+
+      await fetch('/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+
+      form.reset();
+      fetchData();
+    }
+
+    document.getElementById('data-form').addEventListener('submit', submitForm);
+
+    // Fetch data on page load
+    fetchData();
+  </script>
+</body>
+</html>
+
