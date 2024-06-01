@@ -13,5 +13,7 @@ jobs:
     steps:
       - name: build js app
         run: |
+          pwd
+          ls -la
           cd app
           docker build -t js_app:1.0.0 .
