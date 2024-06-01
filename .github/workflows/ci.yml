@@ -12,4 +12,4 @@ jobs:
     
     steps:
       - name: build js app
-        run: docker build -t js_app:1.0.0 -f app/Dockerfile
+        run: docker build . -t js_app:1.0.0 -f app/Dockerfile
