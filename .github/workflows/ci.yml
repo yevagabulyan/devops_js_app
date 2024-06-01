@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: build js app
         run: |
+          cd ..
           pwd
           ls -la
           cd app
