@@ -46,7 +46,8 @@ jobs:
           chmod 400 /tmp/vm_private_key.pem
 
           ssh -o StrictHostKeychecking=no -i /tmp/vm_private_key.pem $VM_USER@$VM_HOST << EOF
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github:latest
 
-          docker run -d --name my-app ${{ secrets.DOCKERHUB_USERNAME }}/github:latest
+          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github:latest
+
+          sudo docker run -d --name my-app ${{ secrets.DOCKERHUB_USERNAME }}/github:latest
           EOF
