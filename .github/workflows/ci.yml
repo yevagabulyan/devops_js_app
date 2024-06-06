@@ -32,3 +32,21 @@ jobs:
           context: app
           push: true
           tags: khond/github:latest
+
+      - name: Docker logout
+        run: docker logout
+
+      - name: Deployment our app
+        env: 
+          VM_HOST: ${{ secrets.VM_HOST }}
+          VM_USER: ${{ secrets.VM_USER }}
+          VM_PRIVATE_KEY: ${{ secrets.VM_PRIVATE_KEY }}
+        run: |
+          echo "$VM_PRIVATE_KEY" > /tmp/vm_private_key.pem
+          chmod 400 /tmp/vm_private_key.pem
+
+          ssh -o StrictHostKeychecking=no -i /tmp/vm_private_key.pem $VM_USER@$VM_HOST << EOF
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github:latest
+
+          docker run -d --name my-app ${{ secrets.DOCKERHUB_USERNAME }}/github:latest
+          EOF
