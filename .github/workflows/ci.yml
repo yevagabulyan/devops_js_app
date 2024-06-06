@@ -47,7 +47,9 @@ jobs:
 
           ssh -o StrictHostKeychecking=no -i /tmp/vm_private_key.pem $VM_USER@$VM_HOST << EOF
 
-          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github:latest
-
-          sudo docker run -d --name my-app ${{ secrets.DOCKERHUB_USERNAME }}/github:latest
+          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github:latest 
+          sudo docker run -d --name my-app -p 3000:3000 ${{ secrets.DOCKERHUB_USERNAME }}/github:latest
           EOF
+
+      - name: Cleaan up
+        run: rm /tmp/vm_private_key.pem
