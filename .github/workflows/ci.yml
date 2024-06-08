@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Install all packeges
         run: sudo pip install boto boto3 ansible
 
@@ -19,7 +22,6 @@ jobs:
 
       - name: check file
         run: |
-          cd devops_js_app
           pwd
           ls -la
 
@@ -34,9 +36,6 @@ jobs:
           ANSIBLE_DEPRECATION_WARNINGS: 'false'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - name: Checkout
-        uses: actions/checkout@v4
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
