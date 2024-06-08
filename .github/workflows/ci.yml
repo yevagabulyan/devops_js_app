@@ -17,6 +17,11 @@ jobs:
       - name: Install anisble aws collection
         run: ansible-galaxy collection install amazon.aws
 
+      - name: check file
+        run: |
+          pwd
+          ls -la
+
       - name: Play Ansible Playbook
         uses: arillso/action.playbook@master
         with:
