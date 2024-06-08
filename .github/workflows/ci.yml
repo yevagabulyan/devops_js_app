@@ -19,6 +19,7 @@ jobs:
 
       - name: check file
         run: |
+          cd devops_js_app
           pwd
           ls -la
 
