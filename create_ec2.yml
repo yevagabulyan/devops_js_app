@@ -22,4 +22,11 @@
       image_id: ami-0eb9d67c52f5c80e5
       tags:
         Environment: Testing
+    register: ec2
+
+   - name: get ip address
+     copy:
+       scr: "{{ ec2.public_ip }}"
+       dest: ./ip
+
 
