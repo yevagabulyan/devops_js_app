@@ -16,8 +16,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python3 -m pip install --upgrade pip
-          pip3 install ansible boto boto3
+          /usr/bin/python3 -m pip install --upgrade pip
+          pip install ansible boto boto3
 
       - name: Install anisble aws collection
         run: ansible-galaxy collection install amazon.aws
