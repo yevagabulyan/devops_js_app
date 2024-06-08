@@ -25,8 +25,7 @@
     register: ec2
 
    - name: get ip address
-     copy:
-       src: "{{ ec2.public_ip }}"
-       dest: ./ip
+     debug:
+       msg: "{{ ec2.public_ip }}
 
 
