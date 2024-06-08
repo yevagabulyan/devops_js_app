@@ -8,21 +8,11 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Debugging
-        run: | 
-          python3 --version
-          pip --version
-
-      - name: Install dependencies
-        run: |
-          /usr/bin/python3 -m pip install --upgrade pip
-          pip install ansible boto boto3
 
       - name: Install anisble aws collection
         run: ansible-galaxy collection install amazon.aws
