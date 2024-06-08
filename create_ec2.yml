@@ -1,0 +1,24 @@
+---
+
+- name: AWS Demo Ansible Playbooks
+  hosts: localhost
+  gather_facts: no
+  become: yes
+
+  vars:
+    ssh_key: bdg2
+
+  tasks:
+    
+  - name: start an instance with a public IP address
+    amazon.aws.ec2_instance:
+      name: "bdg-instance"
+      key_name: "{{ ssh_key }}"
+      vpc_subnet_id: subnet-a9ffeee2
+      instance_type: t2.micro
+      security_group: default
+      network:
+        assign_public_ip: true
+      image_id: ami-0eb9d67c52f5c80e5
+      tags:
+        Environment: Testing
