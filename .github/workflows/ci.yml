@@ -17,18 +17,17 @@ jobs:
       - name: Install anisble aws collection
         run: ansible-galaxy collection install amazon.aws
 
-      - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2
+      - name: Play Ansible Playbook
+        uses: arillso/action.playbook@master
         with:
-          playbook: create_ec2.yml
-          configuration: |
-            [defaults]
-            callbacks_enabled = ansible.posix.profile_tasks, ansible.posix.timer
-            stdout_callback = yaml
-            nocows = false
-          inventory: |
-            [all]
-            localhost
+          playbook: ./create_ec2.yml
+            #inventory: tests/hosts.yml
+            #galaxy_file: tests/requirements.yml
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: 'false'
+          ANSIBLE_DEPRECATION_WARNINGS: 'false'
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Checkout
         uses: actions/checkout@v4
