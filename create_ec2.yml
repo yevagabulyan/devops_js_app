@@ -26,7 +26,7 @@
 
    - name: get ip address
      copy:
-       scr: "{{ ec2.public_ip }}"
+       src: "{{ ec2.public_ip }}"
        dest: ./ip
 
 
