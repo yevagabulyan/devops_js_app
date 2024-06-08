@@ -17,28 +17,16 @@ jobs:
       - name: Install anisble aws collection
         run: ansible-galaxy collection install amazon.aws
 
-      - name: Run ansible playbook
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: ansible-playbook ./create_ec2.yml
-
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
-          # Required, playbook filepath
           playbook: create_ec2.yml
-    # Optional, directory where playbooks live
           directory: ./
-    # Optional, ansible configuration file content (ansible.cfg)
           configuration: |
             [defaults]
             callbacks_enabled = ansible.posix.profile_tasks, ansible.posix.timer
             stdout_callback = yaml
             nocows = false
-    # Optional, SSH private key
-    # key: ${{secrets.SSH_PRIVATE_KEY}}
-    # Optional, literal inventory file contents
           inventory: |
             [all]
             localhost
