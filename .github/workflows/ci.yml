@@ -14,28 +14,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install all packeges
-        run: sudo pip install boto boto3 ansible
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install ansible boto boto3
 
       - name: Install anisble aws collection
         run: ansible-galaxy collection install amazon.aws
 
-      - name: check file
-        run: |
-          pwd
-          ls -la
-
       - name: Play Ansible Playbook
-        uses: arillso/action.playbook@master
-        with:
-          playbook: ./create_ec2.yml
-            #inventory: tests/hosts.yml
-            #galaxy_file: tests/requirements.yml
         env:
-          ANSIBLE_HOST_KEY_CHECKING: 'false'
-          ANSIBLE_DEPRECATION_WARNINGS: 'false'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: ansible-playbook -i localhost ./create_ec2.yml 
+          #      - name: Play Ansible Playbook
+          #uses: arillso/action.playbook@master
+          #with:
+          #playbook: ./create_ec2.yml
+            #inventory: tests/hosts.yml
+            #galaxy_file: tests/requirements.yml
+            #env:
+            #ANSIBLE_HOST_KEY_CHECKING: 'false'
+            #ANSIBLE_DEPRECATION_WARNINGS: 'false'
+            #AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            #AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
