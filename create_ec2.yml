@@ -26,6 +26,6 @@
 
    - name: get ip address
      debug:
-       msg: "{{ ec2.public_ip }}
+       msg: "{{ ec2.public_ip }}"
 
 
