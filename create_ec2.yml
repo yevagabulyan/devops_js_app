@@ -27,32 +27,32 @@
 
   - name: Debugging
     debug:
-      var: ec2
+      var: ec2.instances.public_ip_address
 
   - name: Add new instance to host group
     add_host:
-      hostname: "{{ item.public_ip_addres }}"
+      hostname: "{{ item.public_ip_address }}"
       groupname: launched
     loop: "{{ ec2.instances }}"
 
   - name: Print public IP
     debug:
-      msg: "EC2 instance public IP: {{ item.public_ip_addres }}"
+      msg: "EC2 instance public IP: {{ item.public_ip_address }}"
     loop: "{{ ec2.instances }}"
-    when: item.public_ip_addres is defined
+    when: item.public_ip_address is defined
 
   - name: Set public IP fact
     set_fact:
-      public_ip: "{{ item.public_ip_addres }}"
+      public_ip: "{{ item.public_ip_address }}"
     loop: "{{ ec2.instances }}"
-    when: item.public_ip_addres is defined
+    when: item.public_ip_address is defined
 
   - name: Save public IP to file
     copy:
-      content: "{{ item.public_ip_addres }}"
+      content: "{{ item.public_ip_address }}"
       dest: ./public_ip.txt
     loop: "{{ ec2.instances }}"
-    when: item.public_ip_addres is defined
+    when: item.public_ip_address is defined
 
 
 
