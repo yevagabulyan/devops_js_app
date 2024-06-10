@@ -59,7 +59,7 @@ jobs:
           VM_PRIVATE_KEY: ${{ secrets.VM_PRIVATE_KEY }}
         run: |
           echo "$VM_PRIVATE_KEY" > /tmp/vm_private_key.pem
-          chmod 400 /tmp/vm_private_key.pem
+          sudo chmod 400 /tmp/vm_private_key.pem
 
           ssh -o StrictHostKeychecking=no -i /tmp/vm_private_key.pem $VM_USER@$VM_HOST << EOF
           sudo yum update -y

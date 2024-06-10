@@ -25,16 +25,6 @@
         Environment: Testing
     register: ec2
 
-  - name: Debugging
-    debug:
-      var: ec2.instances.public_ip_address
-
-  - name: Add new instance to host group
-    add_host:
-      hostname: "{{ item.public_ip_address }}"
-      groupname: launched
-    loop: "{{ ec2.instances }}"
-
   - name: Print public IP
     debug:
       msg: "EC2 instance public IP: {{ item.public_ip_address }}"
