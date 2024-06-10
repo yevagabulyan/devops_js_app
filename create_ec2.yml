@@ -20,9 +20,14 @@
       network:
         assign_public_ip: true
       image_id: ami-0eb9d67c52f5c80e5
+      wait: yes
       tags:
         Environment: Testing
     register: ec2
+
+  - nmae: Debugging
+    debug:
+      var: ec2
 
   - name: Add new instance to host group
     add_host:
