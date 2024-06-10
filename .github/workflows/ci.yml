@@ -22,18 +22,13 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-west-2
-        run: ansible-playbook -i localhost ./create_ec2.yml 
-          #      - name: Play Ansible Playbook
-          #uses: arillso/action.playbook@master
-          #with:
-          #playbook: ./create_ec2.yml
-            #inventory: tests/hosts.yml
-            #galaxy_file: tests/requirements.yml
-            #env:
-            #ANSIBLE_HOST_KEY_CHECKING: 'false'
-            #ANSIBLE_DEPRECATION_WARNINGS: 'false'
-            #AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            #AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: ansible-playbook -i localhost ./create_ec2.yml
+
+      - name: Read public IP
+        run: echo "PUBLIC_IP=$(cat ./public_ip.txt)" >> $GITHUB_ENV
+
+      - name: Use public IP in next steps
+        run: echo "The public IP of the deployed EC2 instance is ${{ env.PUBLIC_IP }}"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -59,7 +54,7 @@ jobs:
 
       - name: Deployment our app
         env: 
-          VM_HOST: ${{ secrets.VM_HOST }}
+          VM_HOST: ${{ env.PUBLIC_IP }}
           VM_USER: ${{ secrets.VM_USER }}
           VM_PRIVATE_KEY: ${{ secrets.VM_PRIVATE_KEY }}
         run: |
