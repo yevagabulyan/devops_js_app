@@ -31,28 +31,28 @@
 
   - name: Add new instance to host group
     add_host:
-      hostname: "{{ item.public_ip }}"
+      hostname: "{{ item.public_ip_addres }}"
       groupname: launched
     loop: "{{ ec2.instances }}"
 
   - name: Print public IP
     debug:
-      msg: "EC2 instance public IP: {{ item.public_ip }}"
+      msg: "EC2 instance public IP: {{ item.public_ip_addres }}"
     loop: "{{ ec2.instances }}"
-    when: item.public_ip is defined
+    when: item.public_ip_addres is defined
 
   - name: Set public IP fact
     set_fact:
-      public_ip: "{{ item.public_ip }}"
+      public_ip: "{{ item.public_ip_addres }}"
     loop: "{{ ec2.instances }}"
-    when: item.public_ip is defined
+    when: item.public_ip_addres is defined
 
   - name: Save public IP to file
     copy:
-      content: "{{ item.public_ip }}"
+      content: "{{ item.public_ip_addres }}"
       dest: ./public_ip.txt
     loop: "{{ ec2.instances }}"
-    when: item.public_ip is defined
+    when: item.public_ip_addres is defined
 
 
 
