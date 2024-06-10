@@ -25,7 +25,7 @@
         Environment: Testing
     register: ec2
 
-  - nmae: Debugging
+  - name: Debugging
     debug:
       var: ec2
 
