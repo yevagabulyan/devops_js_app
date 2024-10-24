@@ -20,7 +20,7 @@ services:
       - "27017:27017"
 
   nginx:
-    container_name: bestNginx
+    container_name: myUniqueNginxName
     build: nginx
     ports:
       - "80:80"
